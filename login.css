@@ -1,10 +1,9 @@
-* General Reset */
-
-*{
+/* General Reset */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 body {
@@ -23,9 +22,8 @@ header {
     color: #fff;
 }
 
-header .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
+header .logo img {
+    height: 50px;
 }
 
 nav a {
@@ -40,72 +38,63 @@ nav a:hover {
     color: #f39c12;
 }
 
-/* Form Section */
+/* Form Section Styles */
 .form-section {
-    max-width: 500px;
+    max-width: 400px;
     margin: 3rem auto;
     padding: 2rem;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .form-section h2 {
-    text-align: center;
     margin-bottom: 1.5rem;
-    font-size: 2rem;
     color: #2c3e50;
 }
 
-form label {
+.form-section label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
     color: #333;
 }
 
-form input,
-form select {
+.form-section input {
     width: 100%;
     padding: 0.75rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 1rem;
 }
 
-form input:focus,
-form select:focus {
-    border-color: #f39c12;
-    outline: none;
-}
-
-.btn {
-    display: block;
+.form-section button {
+    display: inline-block;
     width: 100%;
     padding: 0.75rem;
     background-color: #f39c12;
     color: #fff;
     border: none;
     border-radius: 5px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
-.btn:hover {
+.form-section button:hover {
     background-color: #e67e22;
 }
 
 /* Responsive Design */
 @media (max-width: 600px) {
-    .form-section {
-        margin: 1rem;
-        padding: 1.5rem;
-    }
-
     header {
         flex-direction: column;
         text-align: center;
+    }
+
+    .form-section {
+        margin: 2rem 1rem;
+        padding: 1.5rem;
     }
 }
