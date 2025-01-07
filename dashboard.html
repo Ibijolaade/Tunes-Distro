@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TunesDistro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body onload="loadDashboard()">
+    <header>
+        <div class="logo"><img src="./images/logo.png" alt=""></div>
+        <nav>
+            <a href="#" onclick="handleLogout()">Logout</a>
+        </nav>
+    </header>
+
+    <section class="dashboard">
+        <h2>Your Growth Dashboard</h2>
+        <p id="greeting"></p>
+
+        <!-- User Details -->
+        <div class="user-details">
+            <h3>Your Details</h3>
+            <ul>
+                <li><strong>First Name:</strong> <span id="firstName"></span></li>
+                <li><strong>Last Name:</strong> <span id="lastName"></span></li>
+                <li><strong>Email:</strong> <span id="email"></span></li>
+                <li><strong>Music Genre:</strong> <span id="musicGenre"></span></li>
+                <li><strong>Payment per Music:</strong> $<span id="payment"></span></li>
+            </ul>
+        </div>
+
+        <!-- Add Song Form -->
+        <div class="add-song">
+            <h3>Add a New Song</h3>
+            <form id="addSongForm">
+                <label for="songName">Song Name:</label>
+                <input type="text" id="songName" placeholder="Enter song name" required>
+
+                <label for="streams">Total Streams:</label>
+                <input type="number" id="streams" placeholder="Enter total streams" required>
+
+                <label for="upc">UPC:</label>
+                <input type="text" id="upc" placeholder="Enter UPC" required>
+
+                <label for="isrc">ISRC:</label>
+                <input type="text" id="isrc" placeholder="Enter ISRC" required>
+
+                <button type="submit" class="btn">Add Song</button>
+            </form>
+        </div>
+
+        <!-- Song Details -->
+        <div class="song-section">
+            <h3>Your Songs</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Song Name</th>
+                        <th>Total Streams</th>
+                        <th>UPC</th>
+                        <th>ISRC</th>
+                        <th>Growth</th>
+                    </tr>
+                </thead>
+                <tbody id="songTableBody">
+                    <!-- Songs will be loaded here dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
