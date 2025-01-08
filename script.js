@@ -78,107 +78,33 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// Dashboard Greeting
-function loadDashboard() {
-    const user = JSON.parse(localStorage.getItem('loggedInUser'));
-    if (!user) {
-        window.location.href = "login.html";
-        return;
-    }
-
-    document.getElementById("greeting").innerText = `Welcome, ${user.name}!`;
-}
-
-// Logout Logic
-function handleLogout() {
-    localStorage.removeItem('loggedInUser');
-    window.location.href = "login.html";
-}
-
 // Load Dashboard Details
 function loadDashboard() {
-    const user = JSON.parse(localStorage.getItem('loggedInUser'));
-    if (!user) {
+    // Retrieve the logged-in user from localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+    // Redirect to login page if no user is logged in
+    if (!loggedInUser) {
+        alert("You must be logged in to view the dashboard.");
         window.location.href = "login.html";
         return;
     }
 
-    // Personal Greeting
-    document.getElementById("greeting").innerText = `Welcome, ${user.firstName} ${user.lastName}!`;
-
-    // Populate User Details
-    document.getElementById("firstName").innerText = user.firstName;
-    document.getElementById("lastName").innerText = user.lastName;
-    document.getElementById("email").innerText = user.email;
-    document.getElementById("musicGenre").innerText = user.musicGenre;
-    document.getElementById("payment").innerText = user.payment;
-
-    // Load Songs
-    loadSongs();
+    // Display user details
+    document.getElementById("greeting").innerText = `Welcome, ${loggedInUser.firstName} ${loggedInUser.lastName}!`;
+    document.getElementById("firstName").innerText = loggedInUser.firstName;
+    document.getElementById("lastName").innerText = loggedInUser.lastName;
+    document.getElementById("email").innerText = loggedInUser.email;
+    document.getElementById("musicGenre").innerText = loggedInUser.musicGenre;
+    document.getElementById("payment").innerText = loggedInUser.payment;
 }
 
-// Load Songs from localStorage
-function loadSongs() {
-    const songs = JSON.parse(localStorage.getItem('songs')) || [];
-    const songTableBody = document.getElementById("songTableBody");
-
-    // Clear existing rows
-    songTableBody.innerHTML = "";
-
-    // Add each song to the table
-    songs.forEach((song, index) => {
-        const row = `
-            <tr>
-                <td>${song.name}</td>
-                <td>${song.streams}</td>
-                <td>${song.upc}</td>
-                <td>${song.isrc}</td>
-                <td>${song.growth}%</td>
-            </tr>
-        `;
-        songTableBody.innerHTML += row;
-    });
-}
-
-// Add New Song
-document.getElementById("addSongForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const songName = document.getElementById("songName").value.trim();
-    const streams = document.getElementById("streams").value.trim();
-    const upc = document.getElementById("upc").value.trim();
-    const isrc = document.getElementById("isrc").value.trim();
-
-    if (!songName || !streams || !upc || !isrc) {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-    // Generate a random growth percentage
-    const growth = Math.floor(Math.random() * 100);
-
-    const newSong = {
-        name: songName,
-        streams: parseInt(streams),
-        upc,
-        isrc,
-        growth
-    };
-
-    // Save to localStorage
-    const songs = JSON.parse(localStorage.getItem('songs')) || [];
-    songs.push(newSong);
-    localStorage.setItem('songs', JSON.stringify(songs));
-
-    // Reload Songs
-    loadSongs();
-
-    // Clear the form
-    document.getElementById("addSongForm").reset();
-});
-
-// Logout Logic
+// Handle Logout
 function handleLogout() {
-    localStorage.removeItem('loggedInUser');
+    // Clear the logged-in user from localStorage
+    localStorage.removeItem("loggedInUser");
+
+    // Redirect to the login page
     window.location.href = "login.html";
 }
+
