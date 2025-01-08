@@ -1,132 +1,82 @@
 //SignUp
-// Wait until the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-    // Select the signup form
+    // Handle sign-up form
     const signupForm = document.getElementById("signupForm");
+    if (signupForm) {
+        signupForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
 
-    // Check if the form exists in the DOM
-    if (!signupForm) {
-        console.error("Sign-up form not found in the DOM.");
-        return;
+            // Get form values
+            const firstName = document.getElementById("firstName").value.trim();
+            const lastName = document.getElementById("lastName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const state = document.getElementById("state").value.trim();
+            const country = document.getElementById("country").value.trim();
+            const musicGenre = document.getElementById("musicGenre").value;
+            const payment = document.getElementById("payment").value;
+            const password = document.getElementById("password").value;
+
+            // Validation
+            if (!firstName || !lastName || !email || !state || !country || !musicGenre || !payment || !password) {
+                alert("All fields are required.");
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                return;
+            }
+
+            // Save user to localStorage
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const userExists = users.some(user => user.email === email);
+
+            if (userExists) {
+                alert("Email already exists. Please log in.");
+                return;
+            }
+
+            const newUser = { firstName, lastName, email, state, country, musicGenre, payment, password };
+            users.push(newUser);
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("Sign-up successful! Redirecting to login...");
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1000);
+        });
     }
 
-    // Add an event listener for form submission
-    signupForm.addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent form from refreshing the page
+    // Handle login form
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
 
-        // Get form values
-        const firstName = document.getElementById("firstName").value.trim();
-        const lastName = document.getElementById("lastName").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const state = document.getElementById("state").value.trim();
-        const country = document.getElementById("country").value.trim();
-        const musicGenre = document.getElementById("musicGenre").value;
-        const payment = document.getElementById("payment").value;
-        const password = document.getElementById("password").value;
+            // Get form values
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
 
-        // Validation
-        if (!firstName || !lastName || !email || !state || !country || !musicGenre || !payment || !password) {
-            alert("All fields are required.");
-            return;
-        }
+            // Check if user exists
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const user = users.find(user => user.email === email && user.password === password);
 
-        if (password.length < 6) {
-            alert("Password must be at least 6 characters long.");
-            return;
-        }
+            if (!user) {
+                alert("Invalid email or password.");
+                return;
+            }
 
-        // Save user to localStorage
-        const users = JSON.parse(localStorage.getItem("users")) || [];
-        const userExists = users.some(user => user.email === email);
+            // Save logged-in user to localStorage
+            localStorage.setItem("loggedInUser", JSON.stringify(user));
 
-        if (userExists) {
-            alert("Email already exists. Please log in.");
-            return;
-        }
-
-        const newUser = {
-            firstName,
-            lastName,
-            email,
-            state,
-            country,
-            musicGenre,
-            payment,
-            password
-        };
-
-        users.push(newUser);
-        localStorage.setItem("users", JSON.stringify(users));
-
-        alert("Sign-up successful! Redirecting to login...");
-        setTimeout(() => {
-            window.location.href = "login.html";
-        }, 1000);
-    });
+            alert("Login successful! Redirecting to dashboard...");
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 1000);
+        });
+    }
 });
 
-// Global Variables
-const users = JSON.parse(localStorage.getItem('users')) || [];
-
-// Utility Functions
-function showAlert(message, type = "error") {
-    alert(`${type.toUpperCase()}: ${message}`);
-}
-
-// Signup Logic
-function handleSignUp(event) {
-    event.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
-    if (!name || !email || !password) {
-        showAlert("All fields are required.");
-        return;
-    }
-
-    if (password.length < 6) {
-        showAlert("Password must be at least 6 characters long.");
-        return;
-    }
-
-    const userExists = users.some(user => user.email === email);
-    if (userExists) {
-        showAlert("Email already exists. Please log in.");
-        return;
-    }
-
-    users.push({ name, email, password });
-    localStorage.setItem('users', JSON.stringify(users));
-    showAlert("Sign-up successful! Redirecting to login...", "success");
-
-    setTimeout(() => {
-        window.location.href = "login.html";
-    }, 1000);
-}
-
-// Login Logic
-function handleLogin(event) {
-    event.preventDefault();
-
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
-    const user = users.find(user => user.email === email && user.password === password);
-
-    if (!user) {
-        showAlert("Invalid email or password.");
-        return;
-    }
-
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
-    showAlert("Login successful! Redirecting to dashboard...", "success");
-
-    setTimeout(() => {
-        window.location.href = "dashboard.html";
-    }, 1000);
-}
 
 // Dashboard Greeting
 function loadDashboard() {
