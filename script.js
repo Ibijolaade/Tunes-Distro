@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault(); // Prevent form submission
 
             // Get form values
-            const firstName = document.getElementById("firstName").value.trim();
-            const lastName = document.getElementById("lastName").value.trim();
+            const firstName = document.getElementById("firstname").value.trim();
+            const lastName = document.getElementById("lastname").value.trim();
             const email = document.getElementById("email").value.trim();
             const state = document.getElementById("state").value.trim();
             const country = document.getElementById("country").value.trim();
@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Check if user exists
             const users = JSON.parse(localStorage.getItem("users")) || [];
             const user = users.find(user => user.email === email && user.password === password);
+            console.log(user)
 
             if (!user) {
                 alert("Invalid email or password.");
